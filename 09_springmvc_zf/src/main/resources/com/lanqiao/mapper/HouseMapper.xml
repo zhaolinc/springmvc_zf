@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lanqiao.mapper.HouseMapper">
+
+    <resultMap id="BaseResultMap" type="com.lanqiao.domain.House">
+            <id property="id" column="ID" jdbcType="INTEGER"/>
+            <result property="userId" column="USER_ID" jdbcType="INTEGER"/>
+            <result property="streetId" column="STREET_ID" jdbcType="INTEGER"/>
+            <result property="typeId" column="TYPE_ID" jdbcType="INTEGER"/>
+            <result property="room" column="ROOM" jdbcType="INTEGER"/>
+            <result property="hall" column="HALL" jdbcType="INTEGER"/>
+            <result property="title" column="TITLE" jdbcType="VARCHAR"/>
+            <result property="description" column="DESCRIPTION" jdbcType="VARCHAR"/>
+            <result property="price" column="PRICE" jdbcType="INTEGER"/>
+            <result property="pubdate" column="PUBDATE" jdbcType="TIMESTAMP"/>
+            <result property="telephone" column="TELEPHONE" jdbcType="VARCHAR"/>
+            <result property="contact" column="CONTACT" jdbcType="VARCHAR"/>
+            <!--映射types-->
+            <association property="types" javaType="types" columnPrefix="t_">
+                <id property="id" column="ID" jdbcType="INTEGER"/>
+                <result property="name" column="NAME" jdbcType="VARCHAR"/>
+            </association>
+            <!--映射street-->
+            <association property="street" javaType="street">
+                <id property="id" column="S_ID" jdbcType="INTEGER"/>
+                <result property="name" column="S_NAME" jdbcType="VARCHAR"/>
+                <!--区-->
+                <association property="district" javaType="district" columnPrefix="d_">
+                    <id property="id" column="ID" jdbcType="INTEGER"/>
+                    <result property="name" column="NAME" jdbcType="VARCHAR"/>
+                </association>
+            </association>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        ID,USER_ID,STREET_ID,
+        TYPE_ID,ROOM,HALL,
+        TITLE,DESCRIPTION,PRICE,
+        PUBDATE,TELEPHONE,CONTACT
+    </sql>
+
+    <select id="selectForPage" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/>
+        from house
+        order by ID
+    </select>
+
+    <select id="findById" parameterType="int" resultMap="BaseResultMap">
+        select h.ID,
+               h.USER_ID,
+               h.STREET_ID,
+               h.TYPE_ID,
+               h.ROOM,HALL,
+               h.TITLE,
+               h.DESCRIPTION,
+               h.PRICE,
+               h.PUBDATE,
+               h.TELEPHONE,
+               h.CONTACT,
+               t.ID t_id,
+               t.NAME t_name,
+               s.ID s_id,
+               s.NAME s_name,
+               d.ID d_id,
+               d.NAME d_name
+        from house h
+            left join types t
+                on h.ID = t.ID
+            left join street s
+                on h.STREET_ID = s.ID
+            left join district d
+                      on s.DISTRICT_ID = d.ID
+        where h.ID = #{value}
+    </select>
+</mapper>
