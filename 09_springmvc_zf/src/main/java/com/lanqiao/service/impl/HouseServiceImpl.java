@@ -38,4 +38,9 @@ public class HouseServiceImpl implements IHouseService {
     public House findById(Integer id) {
         return this.houseMapper.findById(id);
     }
+
+    @Override
+    public List<House> selectMyHouse(Integer userId) {
+        return this.houseMapper.selectMyHouse(userId);
+    }
 }

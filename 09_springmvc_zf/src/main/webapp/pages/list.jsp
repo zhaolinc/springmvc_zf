@@ -56,7 +56,7 @@ $(function () {})
 		</td>
 	</tr>
 	<tr>
-		<td width='150'><a href="house/find_for_me?userId=${sessionScope.logUser.userId}">管理我的租房信息</a></td>
+		<td width='150'><a href="house/manage/my">管理我的租房信息</a></td>
 	</tr>
 	<tr>
 		<td width='100'><a href="views/post.jsp">发布租房信息</a></td>

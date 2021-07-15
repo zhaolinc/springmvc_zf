@@ -53,7 +53,7 @@
 		</td>
 	</tr>
 	<tr>
-		<td width='150'><a href="my.htm">管理我的租房信息</a></td>
+		<td width='150'><a href="house/manage/my">管理我的租房信息</a></td>
 	</tr>
 	<tr>
 		<td width='100'><a href="post.htm">发布租房信息</a></td>

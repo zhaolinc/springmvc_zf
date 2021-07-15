@@ -74,4 +74,16 @@
                       on s.DISTRICT_ID = d.ID
         where h.ID = #{value}
     </select>
+
+    <select id="selectMyHouse" parameterType="int" resultMap="BaseResultMap">
+        select h.ID,
+               h.TITLE,
+               h.PRICE,
+               h.PUBDATE
+        from house h
+                 left join usersinfo u
+                           on h.USER_ID = u.USER_ID
+        where h.USER_ID=#{value}
+    </select>
+
 </mapper>

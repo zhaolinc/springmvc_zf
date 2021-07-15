@@ -2,6 +2,7 @@ package com.lanqiao.controller;
 
 import com.github.pagehelper.Page;
 import com.lanqiao.domain.House;
+import com.lanqiao.domain.UserInfo;
 import com.lanqiao.service.IHouseService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -44,5 +47,18 @@ public class HouseController {
         System.out.println(house);
         modelMap.addAttribute("h",house);
         return "detail";
+    }
+
+    @RequestMapping("/manage/my")
+    public ModelAndView selectMyHouse(HttpSession session){
+        UserInfo logUser = (UserInfo)session.getAttribute("logUser");
+        if (logUser==null){
+            return new ModelAndView("redirect:/login_form.jsp");
+        }
+        List<House> houseList = this.houseService.selectMyHouse(logUser.getUserId());
+        /*指定视图名称*/
+        ModelAndView mav = new ModelAndView("my");
+        mav.addObject(houseList);
+        return mav;
     }
 }

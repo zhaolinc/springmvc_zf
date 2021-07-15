@@ -9,4 +9,6 @@ public interface IHouseService {
     public Page<House> selectForPage(int pageNum, int pageSize);
 
     public House findById(Integer id);
+
+    public List<House> selectMyHouse(Integer userId);
 }

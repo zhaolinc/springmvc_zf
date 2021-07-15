@@ -17,4 +17,11 @@ public interface HouseMapper{
                                      @Param("pageSize") int PageSize);
 
     public House findById(Integer id);
+
+    /**
+     * 查询我的出租信息
+     * @param id
+     * @return
+     */
+    public List<House> selectMyHouse(Integer id);
 }
